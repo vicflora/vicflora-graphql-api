@@ -1,8 +1,8 @@
 ---
-title: Search by date (change history)
+title: Searching by date (change history)
 ---
 
-# Search by date (change history)
+# Searching by date (change history)
 
 ## How to
 
@@ -22,15 +22,19 @@ The date fields that can be queried on are:
 - `last_edit`: Date a record was either `created` or last `modified`.
 - `profile_created`: Date when a profile was created for a taxon. The
   descriptions from the *Flora of Victoria* were loaded on May 1, 2014, so the
-  dates go only back as far as that.
+  dates go only back to the day after that.
 - `profile_updated`: Date the last version of a taxon treatment has been
-  created, if there is more than one version.
+  created, if there is more than one version. VicFlora editors can decide
+  whether the changes they make to a profile warrant a new version or not, so
+  that minor edits can be made without creating a new version. The creator of
+  the latest version and the date this version was created, are what is given
+  under 'Updated by' on the taxon pages in VicFlora.
 - The `created_year`, `created_year_month`, `changed_year`,
   `changed_year_month`, `profile_created_year`, `profile_created_year_month`,
   `profile_updated_year` and `profile_updated_year_month` can also be searched
   on but were intended as and are more useful as facet fields.
 
-Dates in SOLR have to be UTC timestamps, so include the date `yyyy-mm-dd`, a `T`
+Dates in SOLR have to be UTC timestamps, so include the date `YYYY-mm-dd`, a `T`
 to indicate that there is a time coming, the time in hours, minutes and seconds,
 `hh:ii:ss`, and the timezone, which can only be `Z` (for Zulu, i.e. UTC or GMT).
 So, today is `2024-01-15T00:00:00Z`. It should be noted that Australian Eastern
@@ -83,7 +87,17 @@ fact, nothing will happen at all. The browser console will show a GraphQL error
 though, so you can open that (`CTRL+SHIFT+I` and then select `Console`) if you
 want to see what is going on.
 
-## Query
+## Under the hood
+
+This is how it is done in the GraphQL API.
+
+### Query
+
+The fields that need to be included in the output should be listed under `docs`
+in GraphQL Query Langauage (so inside curly braces and with only whitespace
+separating them). This is what goes in the `fl` parameter, as a comma-separated
+string, in the SOLR query string and are the fields that will be available for
+use in the search result items.
 
 ```graphql
 query searchQuery($input: SearchInput!) {
@@ -130,7 +144,12 @@ query searchQuery($input: SearchInput!) {
 }
 ```
 
-## Variables
+### Variables
+
+Any of the search strings listed above can be given as the value for `q`. The
+facet fields that you want to show go in the `facetField` array. The facet
+fields you select in the 'Filter Configuration' window on the Search page in
+VicFlora go in here.
 
 ```json
 {
@@ -141,12 +160,15 @@ query searchQuery($input: SearchInput!) {
     "page": 1,
     "facetLimit": 20,
     "facetField": [
-      "taxonomic_status",
-      "occurrence_status",
-      "establishment_means",
-      "degree_of_establishment",
-      "taxon_rank",
-      "family"
+      "phylum",
+      "created_year",
+      "created_year_month",
+      "updated_year",
+      "updated_year_month",
+      "profile_created_year",
+      "profile_created_year_month",
+      "profile_updated_year",
+      "profile_updated_year_month"
     ]
   }
 }
