@@ -8,7 +8,7 @@ See: https://vicflora.rbg.vic.gov.au/api/#query-vbaTaxaListItem
 
 ## Query
 
-```graphql
+```gql
 query VbaTaxaListItemQuery($id: ID!) {
   vbaTaxaListItem(id: $id) {
     id

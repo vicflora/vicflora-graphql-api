@@ -9,7 +9,7 @@ See: https://vicflora.rbg.vic.gov.au/api/#query-vbaTaxaListItemsUnmatched
 
 ## Query
 
-```graphql
+```gql
 query VbaTaxaListItemsUnmatchedQuery($first: Int, $page: Int) {
   vbaTaxaListItemsUnmatched(first: $first, page: $page) {
     paginatorInfo {

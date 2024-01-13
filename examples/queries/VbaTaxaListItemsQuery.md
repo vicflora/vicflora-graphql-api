@@ -8,7 +8,7 @@ See: https://vicflora.rbg.vic.gov.au/api/#query-vbaTaxaListItems
 
 ## Query
 
-```graphql
+```gql
 query VbaTaxaListItemsQuery($first: Int, $page: Int) {
   vbaTaxaListItems(first: $first, page: $page) {
     paginatorInfo {
