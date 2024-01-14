@@ -11,9 +11,7 @@ query TaxonConceptQuery($id: ID!) {
   taxonConcept(id: $id) {
     id
     taxonName {
-      id
-      fullName
-      authorship
+      ...taxonNameFields
       publishedIn {
         id
         referenceType
