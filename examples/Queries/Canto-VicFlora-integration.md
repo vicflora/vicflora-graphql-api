@@ -353,9 +353,7 @@ or
 
 as there are defaults for all variables.
 
-The higher classification is not in there. It is easy to put the parent UUID in,
-but doing this via the search is a bit ugly, so it might be best to get a
-`taxonConcepts` query. I just never had a use for it until now.
+This is what I use for the Search in VicFlora.
 
 For the synchronisation, I am quite keen to look into the subscription (that's
 the term GraphQL uses for a webhook, I think), as I have not done that before
@@ -366,10 +364,10 @@ probably take less than a minute to replace the entire lookup table. I do this
 for the distribution maps, for which I have a separate Laravel app. (only I do
 not have to use a web service).
 
-The following query will actually give you all the data you'll ever need. And
-you can set the `rows` variable to a high number like `1000` and you'll have the
-data in no time. For this example, I have set it really low (`5`) and I have put
-in a query, so you'll get some more meaningful data than just the first five
+The following query will give you all the data you'll ever need. And you can set
+the `rows` variable to a high number like `1000` and you'll have the data in no
+time. For this example, I have set it really low (`5`) and I have put in a
+query, so you'll get some more meaningful data than just the first five
 documents in the index.
 
 **Query**
@@ -487,3 +485,5 @@ query SearchQuery($input: SearchInput!) {
 }
 ```
 
+I will change the `parentNameUsageId` and `parentNameUsage` to `parentId` and
+`parentName` respectively.
