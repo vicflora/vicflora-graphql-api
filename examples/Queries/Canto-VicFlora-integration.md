@@ -349,14 +349,26 @@ an future addition (when we get better data in Canto).
 
 <br/>
 
-This query gets you all the information you need for a single taxon:
+In the TaxonConceptQuery—which is the query that gets all the information for
+the taxon pages in VicFlora (I have only included the bits that are relevant
+here in the query below)—we also have a hero image at
+`data.TaxonConcept.HeroImage`. All I need for VicFlora is the `thumbnailUrl` and
+ the `previewUrl`, but this is the same
+[Image](https://vicflora.rbg.vic.gov.au/apidocs/#definition-Image) as in the
+query above. You'll find the code I use to get it
+[here](https://github.com/vicflora/vicflora-laravel/blob/main/app/GraphQL/Queries/TaxonConceptHeroImage.php).
+Note that I apply some ordering to get the right image.
 
-**Query**
+ **Query**
 
 ```graphql
 query TaxonConceptQuery($id: ID!){
   taxonConcept(id: $id) {
     ...TaxonConceptFragment
+    heroImage {
+      thumbnailUrl
+      previewUrl
+    }
     parent {
       ...TaxonConceptFragment
     }
@@ -383,10 +395,7 @@ fragment TaxonConceptFragment on TaxonConcept {
 }
 ```
 
-You can do this in Postman and it will give you a cURL command (my client does
-not).
-
-Output for this query:
+**Result**
 
 ```json
 {
@@ -398,6 +407,10 @@ Output for this query:
         "authorship": "Link"
       },
       "taxonRank": "SPECIES",
+      "heroImage": {
+        "thumbnailUrl": "https://vicflora-cdn.rbg.vic.gov.au/assets/canto/thumb/os9iuf56650qt53nod63avm26c-20240327130625126.jpg",
+        "previewUrl": "https://vicflora-cdn.rbg.vic.gov.au/assets/canto/preview/os9iuf56650qt53nod63avm26c-20240327130625126.jpg"
+      },
       "parent": {
         "id": "dfe52d12-cc3f-4620-8a9b-ab8361322615",
         "taxonName": {
@@ -496,81 +509,7 @@ This requires the
 
 > I store the classification in Canto as well with the tags `kingdom:Plantae`, `phylum:Tracheophyta`, `class:Magnoliopsia`, `order:Fabales`, `family:Fabaceae`, `genus:Acacia`, which is great for searching.
 
-<br/>
-
-To get the UUID–name combination for all taxa, you can currently do that via the
-Search:
-
-**Query**
-
-```graphql
-query SearchQuery($input: SearchInput!) {
-  search(input: $input) {
-    meta {
-      params {
-        q
-        fq
-        fl
-        rows
-      }
-      pagination {
-        lastPage
-        total
-        currentPage
-      }
-    }
-    docs {
-      id
-      taxonRank
-      acceptedNameUsage
-      acceptedNameUsageId
-      acceptedNameUsageAuthorship
-      preferredVernacularName
-      scientificName
-      scientificNameAuthorship
-      family
-      taxonomicStatus
-      occurrenceStatus
-      nameAccordingTo
-    }
-  }
-}
-```
-
-**Variables**
-
-```json
-{
-  "input": {
-    "q": "*",
-    "rows": 50,
-    "page": 1
-  }
-}
-```
-
-or
-
-```json
-{
-  "input": {}
-}
-```
-
-as there are defaults for all variables.
-
-This is what I use for the Search in VicFlora.
-
-For the synchronisation, I am quite keen to look into the subscription (that's
-the term GraphQL uses for a webhook, I think), as I have not done that before
-and I think it might be useful for other consumers of VicFlora data as well. For
-our purposes, however, it might be more useful to just be able to query for
-changes in a certain period of time. Also, VicFlora is not huge; it will
-probably take less than a minute to replace the entire lookup table. I do this
-for the distribution maps, for which I have a separate Laravel app. (only I do
-not have to use a web service).
-
-The following query will give you all the data you'll ever need. And you can set
+The following query will give you all the data you'll ever need. You can set
 the `rows` variable to a high number like `1000` and you'll have the data in no
 time. For this example, I have set it really low (`5`) and I have put in a
 query, so you'll get some more meaningful data than just the first five
@@ -693,3 +632,12 @@ query SearchQuery($input: SearchInput!) {
 
 I will change the `parentNameUsageId` and `parentNameUsage` to `parentId` and
 `parentName` respectively.
+
+For the synchronisation, I am quite keen to look into the subscription (that's
+the term GraphQL uses for a webhook, I think), as I have not done that before
+and I think it might be useful for other consumers of VicFlora data as well. For
+our purposes, however, it might be more useful to just be able to query for
+changes in a certain period of time. Also, VicFlora is not huge; it will
+probably take less than a minute to replace the entire lookup table. I do this
+for the distribution maps, for which I have a separate Laravel app. (only I do
+not have to use a web service).
