@@ -334,12 +334,18 @@ fragment paginatorInfoFields on PaginatorInfo {
 }
 ```
 
-This produces the images for https://vicflora.rbg.vic.gov.au/flora/taxon/0c8e21a6-fe09-4835-84e1-d9531ad24728.
+This produces the images for
+https://vicflora.rbg.vic.gov.au/flora/taxon/0c8e21a6-fe09-4835-84e1-d9531ad24728.
+The response from the API you will be setting up should look like this (does not
+have to be exactly the same).
 
 There are more fields documented for
 [Image](https://vicflora.rbg.vic.gov.au/apidocs/#definition-Image) but the
 complete result should be the same fields that you provide now. You can use the
-same labels as we are using now too,
+same labels as we are using now too.
+
+At the moment we do not need any further querying
+capability, but that could be an addition in the future.
 
 <br/>
 
