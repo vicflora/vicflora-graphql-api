@@ -5,7 +5,7 @@
 **TLDR;**
 
 At the end of the document is a query that will get you the entire lookup table.
-You only need the lookup table for tha hierarchy, as the name matching I can do
+You only need the lookup table for the hierarchy, as the name matching I can do
 at my end. I could use some help to set up things properly at my end too (I can
 write a separate document for that).
 
@@ -344,8 +344,8 @@ There are more fields documented for
 complete result should be the same fields that you provide now. You can use the
 same labels as we are using now too.
 
-At the moment we do not need any further querying
-capability, but that could be an addition in the future.
+At the moment we do not need any further querying capability, but that could be
+an future addition (when we get better data in Canto).
 
 <br/>
 
@@ -494,8 +494,12 @@ this is
 This requires the
 [Laravel-CTE](https://packagist.org/packages/staudenmeir/laravel-cte) package.
 
-To get the UUID–name combination for all taxa, you can currently do that only
-via the Search:
+> I store the classification in Canto as well with the tags `kingdom:Plantae`, `phylum:Tracheophyta`, `class:Magnoliopsia`, `order:Fabales`, `family:Fabaceae`, `genus:Acacia`, which is great for searching.
+
+<br/>
+
+To get the UUID–name combination for all taxa, you can currently do that via the
+Search:
 
 **Query**
 
