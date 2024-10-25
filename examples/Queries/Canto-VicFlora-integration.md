@@ -2,15 +2,6 @@
 
 *Instructions for FFM, 2024-10-25*
 
-**TLDR;**
-
-At the end of the document is a query that will get you the entire lookup table.
-You only need the lookup table for the hierarchy, as the name matching I can do
-at my end. I could use some help to set up things properly at my end too (I can
-write a separate document for that).
-
-<br/>
-
 **Endpoint:** https://vicflora.rbg.vic.gov.au/graphql
 
 **Documentation:** https://vicflora.rbg.vic.gov.au/apidocs
@@ -641,3 +632,8 @@ changes in a certain period of time. Also, VicFlora is not huge; it will
 probably take less than a minute to replace the entire lookup table. I do this
 for the distribution maps, for which I have a separate Laravel app. (only I do
 not have to use a web service).
+
+Finally, for reporting purposes, we will need to know periodically how many
+images of different types we have in VicFlora. At the moment we just report on
+how many illustrations and how many photographs there are (this is the 'Subtype'
+field in Canto). It would be great to have an endpoint for these counts.
