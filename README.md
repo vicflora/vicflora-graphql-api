@@ -1,6 +1,6 @@
 # Technical documentation for VicFlora GraphQL API
 
-This repository contains examples of most of the GraphQL gueries that are used
+This repository contains examples of most of the GraphQL queries that are used
 to create the [VicFlora](https://vicflora.rbg.vic.gov.au) public front end.
 
 You should be able to copy and paste the queries and variables into the
